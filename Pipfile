@@ -9,6 +9,9 @@ nltk = "*"
 spacy = "*"
 gensim = "*"
 numpy = "==1.22.0"
+django = "*"
+django-debug-toolbar = "*"
+djangorestframework = "*"
 
 [dev-packages]
 

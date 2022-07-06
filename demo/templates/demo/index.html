@@ -1,0 +1,11 @@
+{% if utterances %}  <!-- utterances should be passed in as 'context' by render -->
+<h3> Utterances </h3>
+    <ul>
+    {% for u in utterances %}
+        <!-- the generations already exist before we click the link here -->
+        <li><a href="/demo/{{ u.id }}/">{{ u.utterance_text }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>Error: Cannot display utterances as none are available. Please add an utterance.</p>
+{% endif %}
