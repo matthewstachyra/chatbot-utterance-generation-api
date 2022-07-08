@@ -1,4 +1,5 @@
 import json
+import logging
 
 from django.shortcuts import render
 from django.http import HttpResponse, Http404
@@ -6,12 +7,6 @@ from django.template import loader
 
 from utils.gen import UtteranceGenerator
 from .models import SeedUtterance, GeneratedUtterances
-
-
-# Routing
-# input - form to add seed utterance.
-# index - display seed utterances to generate from.
-# form - displays generated utterances for the seed utterance to select which to export.
 
 
 def input(request):
@@ -39,7 +34,8 @@ def index(request):
     try:
         utterances = SeedUtterance.objects.all()
 
-    except SeedUtterance.DoesNotExist:
+    except SeedUtterance.DoesNotExist as e:
+        logging.error(e)
         raise Http404("Error: no utterances have been stored yet.")
 
     finally:
@@ -68,7 +64,8 @@ def form(request, utterance_id):
                    }
         template = loader.get_template('demo/form.html')
 
-    except SeedUtterance.DoesNotExist:
+    except SeedUtterance.DoesNotExist as e:
+        logging.error(e)
         raise Http404("Error: This utterance does not exist so no additional utterances could \
                       be generated.")
 
@@ -81,14 +78,16 @@ def export(request, utterance_id):
     try:
         seed_utterance = SeedUtterance.objects.get(pk=utterance_id)
         generated_utterances = request.POST.getlist('generated')
-        json_data['seed'] = seed_utterance.seed_text
-        json_data['generated'] = generated_utterances.split()
-        json = json.dumps(json_data)
-        print(json)
 
-    except:
+        json_data = {}
+        json_data['seed'] = seed_utterance.seed_text
+        json_data['generated'] = generated_utterances
+        json_object = json.dumps(json_data)
+
+    except Exception as e:
+        logging.error(e)
         raise Http404("Error exporting data from form.")
 
-    return HttpResponse(for_export)
+    return HttpResponse(json_object)
 
 
