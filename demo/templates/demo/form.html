@@ -1,0 +1,15 @@
+<!-- form to select which utterances to export -->
+<form action="{% url 'export' seed_utterance.id %}" method="post">
+{% csrf_token %}
+<fieldset>
+    <legend><h1> {{ seed_utterance.seed_text }} </h1></legend>
+    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+    {% for generated in generated_utterances %}
+    <input type="checkbox" name="generated" value="{{ generated.generated_text }}">
+        <label>{{ generated.generated_text }}</label><br>
+    {% endfor %}
+
+</fieldset>
+<input type="submit" value="Export">
+</form>

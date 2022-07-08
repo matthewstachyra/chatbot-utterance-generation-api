@@ -1,0 +1,9 @@
+<!-- text form to submit a seed utterance -->
+<form action="{% url 'index' %}" method="post">
+{% csrf_token %}
+<fieldset>
+    <label for="seed"> Enter a seed utterance: </label>
+    <input type="text" name="seed" value="">
+</fieldset>
+<input type="submit" value="Save">
+</form>

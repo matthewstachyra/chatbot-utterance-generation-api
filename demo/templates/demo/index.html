@@ -2,8 +2,10 @@
 <h3> Utterances </h3>
     <ul>
     {% for u in utterances %}
-        <!-- the generations already exist before we click the link here -->
-        <li><a href="/demo/{{ u.id }}/">{{ u.utterance_text }}</a></li>
+
+        <!-- each links to views.form to open the form -->
+        <li><a href="/demo/{{ u.id }}/">{{ u.seed_text }}</a></li>
+
     {% endfor %}
     </ul>
 {% else %}
