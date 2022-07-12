@@ -22,13 +22,14 @@ def input(request):
 
 
 def index(request):
-    '''display list of utterances in Utterance table.
+    '''display list of utterances in SeedUtterance table.
     '''
     try:
         new = SeedUtterance(seed_text=request.POST['seed'])
         new.save()
 
-    except Exception:
+    except Exception as e:
+        logging.error(e)
         pass # allows access to /demo without passing through /demo/input first
 
     try:

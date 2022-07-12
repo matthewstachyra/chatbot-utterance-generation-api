@@ -5,6 +5,8 @@ Date: June 2022
 '''
 import re
 import itertools
+from random import shuffle
+
 import numpy as np
 from numpy.linalg import norm
 import warnings
@@ -54,12 +56,13 @@ class UtteranceGenerator:
 
 
     def get_phrases(self):
-        need = ['do i need to', 'must i', 'is it required that i', 'will i need to']
+        need = ['do i need', 'do i need to', 'must i', 'must i have', 'is it required that i', 'will i need', 'will i need to']
+        signs = ['what are the signs i need', 'what are the signs i need', 'how do i know i need', 'when will i need to', 'how can i know i need to', 'what are the signs you should', 'when should i have', 'how do i know i should have']
         timing = ['when will I get', 'when can I expect', 'when are', 'by when should I have']
         frequency = ['how often do i need', 'what is the timeframe for']
         scheduling = ['when is my', 'on what date', 'when do i see']
-        insurance = ['is this covered', 'will my insurance cover', 'do i need to pay', 'how much will i pay',
-                     'what is my bill']
+        insurance = ['is this covered', 'will my insurance cover', 'will insurance cover', 'do i need to pay']
+        bill = ['what is my bill', 'how much do i owe', 'how much will i pay for']
         location = ['where is', 'where can i find', 'how can i find', 'i cant find', 'what is the location',
                     'can i have the location']
         ability = ['what can i', 'is there anything i can', 'can i']
@@ -67,7 +70,9 @@ class UtteranceGenerator:
         forgetfulness = ['what if i forgot', 'i forgot to', 'is it ok if i forgot']
         explanation = ['what is', 'tell me what is', 'describe', 'i want to understand']
         phrasebank = [need,
+                      signs,
                       timing,
+                      bill,
                       frequency,
                       scheduling,
                       insurance,
@@ -235,6 +240,7 @@ class UtteranceGenerator:
         '''
         generated = self.add_synonyms()
         generated.extend(self.add_phrases())
+        shuffle(generated)
 
         return generated
 
