@@ -28,6 +28,8 @@ django = "*"
 django-debug-toolbar = "*"
 djangorestframework = "*"
 pandas = "*"
+torch = "*"
+protobuf = "==3.19"
 
 [dev-packages]
 
